@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "postbuild": "cp -r public/data .next/server/app/data",
+    "build": "next build && npm run postbuild",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
