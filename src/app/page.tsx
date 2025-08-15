@@ -1,31 +1,40 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Music, Code, Calendar, ArrowRight, Filter } from "lucide-react"
-import Link from "next/link"
-import { BlogPost, getPostsByLanguage } from "@/lib/posts"
-import { type Language, detectLanguage, getTranslation } from "@/lib/i18n"
-import { LanguageSwitcher } from "@/components/language-switcher"
+import { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Music, Code, Calendar, ArrowRight, Filter } from "lucide-react";
+import Link from "next/link";
+import { BlogPost, getPostsByLanguage } from "@/lib/posts";
+import { type Language, detectLanguage, getTranslation } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 export default function HomePage() {
-  const [language, setLanguage] = useState<Language>("en")
-  const [showAllLanguages, setShowAllLanguages] = useState(true)
+  const [language, setLanguage] = useState<Language>("en");
+  const [showAllLanguages, setShowAllLanguages] = useState(true);
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    setLanguage(detectLanguage())
+    setLanguage(detectLanguage());
     getPostsByLanguage(language).then((res) => {
-      setPosts(res)
-    })
-  }, [])
+      setPosts(res);
+    });
+  }, []);
 
-  const allPosts: BlogPost[] = posts
-  const filteredPosts = showAllLanguages ? allPosts.slice(0, 6) : posts.slice(0, 6)
+  const allPosts: BlogPost[] = posts;
+  const filteredPosts = showAllLanguages
+    ? allPosts.slice(0, 6)
+    : posts.slice(0, 6);
 
-  const t = (key: keyof import("@/lib/i18n").Translations) => getTranslation(language, key)
+  const t = (key: keyof import("@/lib/i18n").Translations) =>
+    getTranslation(language, key);
 
   const getPlaceholderImage = (category: string) => {
     const placeholders = {
@@ -35,9 +44,12 @@ export default function HomePage() {
       "Guitar Theory": "/guitar-effects-dsp.png",
       Programming: "/functional-programming-music.png",
       "Audio Engineering": "/guitar-effects-dsp.png",
-    }
-    return placeholders[category as keyof typeof placeholders] || "/blog-post-cover.png"
-  }
+    };
+    return (
+      placeholders[category as keyof typeof placeholders] ||
+      "/blog-post-cover.png"
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,20 +64,31 @@ export default function HomePage() {
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-foreground">Synth</h1>
-                  <p className="text-sm text-muted-foreground">{t("tagline")}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("tagline")}
+                  </p>
                 </div>
               </div>
             </div>
             <nav className="hidden md:flex items-center space-x-6">
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
+              <Link
+                href="#"
+                className="text-foreground hover:text-primary transition-colors"
+              >
                 {t("blog")}
-              </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
+              </Link>
+              <Link
+                href="/about"
+                className="text-foreground hover:text-primary transition-colors"
+              >
                 {t("about")}
-              </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
+              </Link>
+              <Link
+                href="#"
+                className="text-foreground hover:text-primary transition-colors"
+              >
                 {t("projects")}
-              </a>
+              </Link>
               <Link href="/admin">
                 <Button variant="outline" size="sm">
                   <Code className="w-4 h-4 mr-2" />
@@ -84,28 +107,38 @@ export default function HomePage() {
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-2 bg-primary/10 px-4 py-2 rounded-full">
               <Music className="w-5 h-5 text-primary" />
-              <span className="text-primary font-medium">Computer Science × Guitar</span>
+              <span className="text-primary font-medium">
+                Computer Science × Guitar
+              </span>
               <Code className="w-5 h-5 text-primary" />
             </div>
           </div>
           <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             {language === "vi" ? (
               <>
-                Nơi <span className="text-primary">Nhịp Điệu</span> Gặp Gỡ <span className="text-accent">Logic</span>
+                Nơi <span className="text-primary">Nhịp Điệu</span> Gặp Gỡ{" "}
+                <span className="text-accent">Logic</span>
               </>
             ) : (
               <>
-                Where <span className="text-primary">Rhythm</span> Meets <span className="text-accent">Logic</span>
+                Where <span className="text-primary">Rhythm</span> Meets{" "}
+                <span className="text-accent">Logic</span>
               </>
             )}
           </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">{t("heroSubtitle")}</p>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            {t("heroSubtitle")}
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="text-lg px-8">
               {t("readLatestPosts")}
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 bg-transparent">
+            <Button
+              variant="outline"
+              size="lg"
+              className="text-lg px-8 bg-transparent"
+            >
               {t("aboutSynth")}
             </Button>
           </div>
@@ -117,8 +150,12 @@ export default function HomePage() {
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h3 className="text-3xl font-bold text-foreground mb-2">{t("latestPosts")}</h3>
-              <p className="text-muted-foreground">{t("latestPostsSubtitle")}</p>
+              <h3 className="text-3xl font-bold text-foreground mb-2">
+                {t("latestPosts")}
+              </h3>
+              <p className="text-muted-foreground">
+                {t("latestPostsSubtitle")}
+              </p>
             </div>
             <div className="flex items-center space-x-4">
               <Button
@@ -132,8 +169,8 @@ export default function HomePage() {
                     ? "Lọc theo ngôn ngữ"
                     : "Filter by language"
                   : language === "vi"
-                    ? "Hiện tất cả"
-                    : "Show all"}
+                  ? "Hiện tất cả"
+                  : "Show all"}
               </Button>
               <Button variant="outline">
                 {t("viewAllPosts")}
@@ -150,7 +187,9 @@ export default function HomePage() {
               >
                 <div className="aspect-video overflow-hidden rounded-t-lg">
                   <img
-                    src={post.featuredImage || getPlaceholderImage(post.category)}
+                    src={
+                      post.featuredImage || getPlaceholderImage(post.category)
+                    }
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -167,16 +206,22 @@ export default function HomePage() {
                     </div>
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Calendar className="w-3 h-3 mr-1" />
-                      {new Date(post.date).toLocaleDateString(post.language === "vi" ? "vi-VN" : "en-US")}
+                      {new Date(post.date).toLocaleDateString(
+                        post.language === "vi" ? "vi-VN" : "en-US"
+                      )}
                     </div>
                   </div>
                   <CardTitle className="text-xl group-hover:text-primary transition-colors line-clamp-2">
                     {post.title}
                   </CardTitle>
-                  <CardDescription className="text-sm text-muted-foreground">{post.readTime}</CardDescription>
+                  <CardDescription className="text-sm text-muted-foreground">
+                    {post.readTime}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground/80 mb-4 line-clamp-3">{post.excerpt}</p>
+                  <p className="text-foreground/80 mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {post.tags.map((tag) => (
                       <Badge key={tag} variant="outline" className="text-xs">
@@ -211,56 +256,88 @@ export default function HomePage() {
                 </div>
                 <span className="text-xl font-bold text-foreground">Synth</span>
               </div>
-              <p className="text-muted-foreground mb-4">{t("footerDescription")}</p>
-              <p className="text-sm text-muted-foreground">© 2024 Synth Blog. Made with ❤️ and code.</p>
+              <p className="text-muted-foreground mb-4">
+                {t("footerDescription")}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                © 2024 Synth Blog. Made with ❤️ and code.
+              </p>
             </div>
             <div>
-              <h4 className="font-semibold text-foreground mb-4">{t("categories")}</h4>
+              <h4 className="font-semibold text-foreground mb-4">
+                {t("categories")}
+              </h4>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     {t("computerScience")}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     {t("musicTech")}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     {t("aiMusic")}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     {t("guitarTheory")}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-foreground mb-4">{t("connect")}</h4>
+              <h4 className="font-semibold text-foreground mb-4">
+                {t("connect")}
+              </h4>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     GitHub
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     LinkedIn
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     Twitter
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <Link
+                    href="#"
+                    className="hover:text-primary transition-colors"
+                  >
                     Email
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -268,5 +345,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
