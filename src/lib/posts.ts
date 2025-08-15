@@ -19,7 +19,7 @@ export interface BlogPost {
   featuredImage?: string;
 }
 
-const postsDirectory = path.join(".next", "server", "app", "data");
+const postsDirectory = path.join("./data");
 const postsFilePath = path.join(postsDirectory, "posts.json");
 
 export async function getAllPosts(): Promise<BlogPost[]> {
