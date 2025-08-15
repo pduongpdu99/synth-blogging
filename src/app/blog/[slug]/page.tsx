@@ -234,7 +234,9 @@ export default function BlogPostPage({
                   {children}
                 </blockquote>
               ),
-              code: ({ inline, className, children, ...props }) => {
+              code: (props) => {
+                const { node, inline, className, children, ...rest } =
+                  props as any;
                 const match = /language-(\w+)/.exec(className || "");
                 return !inline && match ? (
                   <SyntaxHighlighter
@@ -242,14 +244,14 @@ export default function BlogPostPage({
                     language={match[1]}
                     PreTag="div"
                     className="rounded-lg my-8 text-sm"
-                    {...props}
+                    {...rest}
                   >
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
                 ) : (
                   <code
                     className="bg-muted/70 px-2 py-1 rounded text-sm font-mono border"
-                    {...props}
+                    {...rest}
                   >
                     {children}
                   </code>
