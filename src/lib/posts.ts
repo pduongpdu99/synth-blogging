@@ -22,15 +22,6 @@ export interface BlogPost {
 const postsDirectory = path.join(process.cwd(), "public/data")
 const postsFilePath = path.join(postsDirectory, "posts.json")
 
-// Ensure data directory exists
-if (!fs.existsSync(postsDirectory)) {
-  fs.mkdirSync(postsDirectory, { recursive: true })
-}
-
-// Initialize posts file if it doesn't exist
-if (!fs.existsSync(postsFilePath)) {
-  fs.writeFileSync(postsFilePath, JSON.stringify([], null, 2))
-}
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
