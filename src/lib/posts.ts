@@ -19,7 +19,7 @@ export interface BlogPost {
   featuredImage?: string
 }
 
-const postsDirectory = path.join(process.cwd(), "public", "data")
+const postsDirectory = path.join(process.cwd(), "data")
 const postsFilePath = path.join(postsDirectory, "posts.json")
 
 
