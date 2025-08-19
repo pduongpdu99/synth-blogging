@@ -28,7 +28,5 @@ jobs:
         npm ci
 
     - name: Build Next.js app
-      run: npm run build
-
-    - name: Run start
-      run: npm start
+      run: npm run Build
+      
