@@ -59,8 +59,8 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Music className="w-4 h-4 text-primary-foreground" />
+                <div className="rounded-lg flex items-center justify-center">
+                  <img src="/favicon.svg" alt="Synth Logo" className="w-8 h-8 rounded-lg" />
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-foreground">Synth</h1>
@@ -117,12 +117,12 @@ export default function HomePage() {
             {language === "vi" ? (
               <>
                 Nơi <span className="text-primary">Nhịp Điệu</span> Gặp Gỡ{" "}
-                <span className="text-accent">Logic</span>
+                <span className="text-primary">Logic</span>
               </>
             ) : (
               <>
                 Where <span className="text-primary">Rhythm</span> Meets{" "}
-                <span className="text-accent">Logic</span>
+                <span className="text-primary">Logic</span>
               </>
             )}
           </h2>
@@ -231,8 +231,8 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Music className="w-4 h-4 text-primary-foreground" />
+                <div className="rounded-lg flex items-center justify-center">
+                  <img src="/favicon.svg" alt="Synth Logo" className="w-8 h-8 rounded-lg" />
                 </div>
                 <span className="text-xl font-bold text-foreground">Synth</span>
               </div>

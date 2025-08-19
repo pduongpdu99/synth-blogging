@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: 'Synth blog',
   description: 'Synth blogger',
   generator: 'Synth',
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({
