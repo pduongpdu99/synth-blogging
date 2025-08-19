@@ -4,6 +4,7 @@ import path from "path";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: "export",
   webpack: (config) => {
     config.resolve.alias['@'] = './src';
     config.module.rules.push({
