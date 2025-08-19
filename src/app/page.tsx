@@ -157,26 +157,6 @@ export default function HomePage() {
                 {t("latestPostsSubtitle")}
               </p>
             </div>
-            <div className="flex items-center space-x-4">
-              <Button
-                variant={showAllLanguages ? "outline" : "default"}
-                size="sm"
-                onClick={() => setShowAllLanguages(!showAllLanguages)}
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                {showAllLanguages
-                  ? language === "vi"
-                    ? "Lọc theo ngôn ngữ"
-                    : "Filter by language"
-                  : language === "vi"
-                  ? "Hiện tất cả"
-                  : "Show all"}
-              </Button>
-              <Button variant="outline">
-                {t("viewAllPosts")}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
