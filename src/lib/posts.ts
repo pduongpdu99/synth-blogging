@@ -1,8 +1,5 @@
 "use server";
 
-import fs from "fs";
-import path from "path";
-
 export interface BlogPost {
   id: number;
   slug: string;
@@ -19,13 +16,12 @@ export interface BlogPost {
   featuredImage?: string;
 }
 
-const postsDirectory = path.join("./data");
-const postsFilePath = path.join(postsDirectory, "posts.json");
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
-    const fileContents = await fs.promises.readFile(postsFilePath, "utf8");
-    const posts = JSON.parse(fileContents) as BlogPost[];
+    const res = await fetch(`${BASE_URL}/data/posts.json`);
+    const posts = (await res.json()) as BlogPost[];
     return posts
       .filter((post) => post.published)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -42,61 +38,6 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   } catch (error) {
     console.error("Error getting post by slug:", error);
     return null;
-  }
-}
-
-export async function savePost(post: Omit<BlogPost, "id">): Promise<BlogPost> {
-  try {
-    const fileContents = await fs.promises.readFile(postsFilePath, "utf8");
-    const posts = JSON.parse(fileContents) as BlogPost[];
-
-    const existingPostIndex = posts.findIndex((p) => p.slug === post.slug);
-
-    if (existingPostIndex >= 0) {
-      const updatedPost = { ...posts[existingPostIndex], ...post };
-      posts[existingPostIndex] = updatedPost;
-      await fs.promises.writeFile(
-        postsFilePath,
-        JSON.stringify(posts, null, 2)
-      );
-      return updatedPost;
-    } else {
-      const newPost: BlogPost = {
-        ...post,
-        id: Math.max(...posts.map((p) => p.id), 0) + 1,
-      };
-      posts.push(newPost);
-      await fs.promises.writeFile(
-        postsFilePath,
-        JSON.stringify(posts, null, 2)
-      );
-      return newPost;
-    }
-  } catch (error) {
-    console.error("Error saving post:", error);
-    throw new Error("Failed to save post");
-  }
-}
-
-export async function deletePost(slug: string): Promise<boolean> {
-  try {
-    const fileContents = await fs.promises.readFile(postsFilePath, "utf8");
-    const posts = JSON.parse(fileContents) as BlogPost[];
-
-    const filteredPosts = posts.filter((post) => post.slug !== slug);
-
-    if (filteredPosts.length === posts.length) {
-      return false;
-    }
-
-    await fs.promises.writeFile(
-      postsFilePath,
-      JSON.stringify(filteredPosts, null, 2)
-    );
-    return true;
-  } catch (error) {
-    console.error("Error deleting post:", error);
-    return false;
   }
 }
 
@@ -125,4 +66,19 @@ export async function searchPosts(query: string): Promise<BlogPost[]> {
       post.content.toLowerCase().includes(lowercaseQuery) ||
       post.tags.some((tag) => tag.toLowerCase().includes(lowercaseQuery))
   );
+}
+export async function savePost(post: BlogPost): Promise<boolean> {
+  try {
+    const res = await fetch(`${BASE_URL}/api/savePost`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+    return res.ok;
+  } catch (error) {
+    console.error("Error saving post:", error);
+    return false;
+  }
 }
