@@ -1,24 +1,38 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Music, Code, Heart, Play, Pause, Volume2, Quote } from "lucide-react"
-import Link from "next/link"
-import { type Language, detectLanguage, getTranslation } from "@/lib/i18n"
-import { LanguageSwitcher } from "@/components/language-switcher"
+import { useState, useEffect, useRef } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Music, Code, Heart, Play, Pause, Volume2, Quote } from "lucide-react";
+import Link from "next/link";
+import { type Language, detectLanguage, getTranslation } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useRouter } from "next/navigation";
 
 export default function AboutPage() {
-  const [language, setLanguage] = useState<Language>("en")
-  const [currentTrack, setCurrentTrack] = useState<number | null>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const [language, setLanguage] = useState<Language>("en");
+  const [currentTrack, setCurrentTrack] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const router = useRouter();
+
+  const navTo = (url: string) => {
+    router.push(url);
+  };
 
   useEffect(() => {
-    setLanguage(detectLanguage())
-  }, [])
+    setLanguage(detectLanguage());
+  }, []);
 
-  const t = (key: keyof import("@/lib/i18n").Translations) => getTranslation(language, key)
+  const t = (key: keyof import("@/lib/i18n").Translations) =>
+    getTranslation(language, key);
 
   const quotes = [
     {
@@ -42,7 +56,7 @@ export default function AboutPage() {
           : "In music I find logic, in programming I find art.",
       author: "Daily Inspiration",
     },
-  ]
+  ];
 
   const interests = [
     {
@@ -61,7 +75,7 @@ export default function AboutPage() {
           : "Teaching free programming classes to children and contributing to open source communities.",
       icon: "🤝",
     },
-  ]
+  ];
 
   const favoriteFilms = [
     {
@@ -88,76 +102,33 @@ export default function AboutPage() {
           : "Exploring the relationship between humans and artificial intelligence.",
       image: "/ai-movie-poster.png",
     },
-  ]
+  ];
 
   const favoriteTracks = [
     {
-      title: "Bohemian Rhapsody",
-      artist: "Queen",
-      duration: "5:55",
-      src: "/placeholder-audio.mp3", // Placeholder audio file
+      title: "Bad Habits",
+      artist: "Ed Sheeran",
+      duration: "4:00",
+      src: "/music/bad-habit-ed.mp3",
     },
-    {
-      title: "Stairway to Heaven",
-      artist: "Led Zeppelin",
-      duration: "8:02",
-      src: "/placeholder-audio.mp3",
-    },
-    {
-      title: "Hotel California",
-      artist: "Eagles",
-      duration: "6:30",
-      src: "/placeholder-audio.mp3",
-    },
-  ]
+  ];
 
   const playTrack = (index: number) => {
     if (currentTrack === index && isPlaying) {
-      audioRef.current?.pause()
-      setIsPlaying(false)
+      audioRef.current?.pause();
+      setIsPlaying(false);
     } else {
       if (audioRef.current) {
-        audioRef.current.src = favoriteTracks[index].src
-        audioRef.current.play()
-        setCurrentTrack(index)
-        setIsPlaying(true)
+        audioRef.current.src = favoriteTracks[index].src;
+        audioRef.current.play();
+        setCurrentTrack(index);
+        setIsPlaying(true);
       }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Music className="w-4 h-4 text-primary-foreground" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">Synth</h1>
-                  <p className="text-sm text-muted-foreground">{t("tagline")}</p>
-                </div>
-              </Link>
-            </div>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link href="/" className="text-foreground hover:text-primary transition-colors">
-                {t("blog")}
-              </Link>
-              <a href="#" className="text-primary font-medium">
-                {t("about")}
-              </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
-                {t("projects")}
-              </a>
-              <LanguageSwitcher currentLanguage={language} />
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* Hero Section */}
         <section className="text-center mb-16">
@@ -170,7 +141,9 @@ export default function AboutPage() {
             {language === "vi" ? "Xin chào, tôi là Synth" : "Hello, I'm Synth"}
           </h1>
           <p className="text-xl text-primary font-medium mb-6">
-            {language === "vi" ? "Nơi nhịp điệu gặp gỡ logic" : "Where rhythm meets logic"}
+            {language === "vi"
+              ? "Nơi nhịp điệu gặp gỡ logic"
+              : "Where rhythm meets logic"}
           </p>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {language === "vi"
@@ -190,7 +163,9 @@ export default function AboutPage() {
                 <CardContent className="pt-6">
                   <Quote className="w-8 h-8 text-primary mb-4" />
                   <p className="text-foreground italic mb-4">"{quote.text}"</p>
-                  <p className="text-sm text-muted-foreground">— {quote.author}</p>
+                  <p className="text-sm text-muted-foreground">
+                    — {quote.author}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -200,7 +175,9 @@ export default function AboutPage() {
         {/* Interests Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
-            {language === "vi" ? "Sở Thích & Hoạt Động" : "Interests & Activities"}
+            {language === "vi"
+              ? "Sở Thích & Hoạt Động"
+              : "Interests & Activities"}
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {interests.map((interest, index) => (
@@ -212,7 +189,9 @@ export default function AboutPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{interest.description}</p>
+                  <p className="text-muted-foreground">
+                    {interest.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -226,7 +205,10 @@ export default function AboutPage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {favoriteFilms.map((film, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <Card
+                key={index}
+                className="overflow-hidden hover:shadow-lg transition-shadow"
+              >
                 <div className="aspect-[3/4] overflow-hidden">
                   <img
                     src={film.image || "/placeholder.svg"}
@@ -238,7 +220,9 @@ export default function AboutPage() {
                   <CardTitle className="text-lg">{film.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">{film.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {film.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -254,10 +238,14 @@ export default function AboutPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Volume2 className="w-5 h-5" />
-                <span>{language === "vi" ? "Playlist Cá Nhân" : "Personal Playlist"}</span>
+                <span>
+                  {language === "vi" ? "Playlist Cá Nhân" : "Personal Playlist"}
+                </span>
               </CardTitle>
               <CardDescription>
-                {language === "vi" ? "Những bài hát truyền cảm hứng cho tôi" : "Songs that inspire me"}
+                {language === "vi"
+                  ? "Những bài hát truyền cảm hứng cho tôi"
+                  : "Songs that inspire me"}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -281,11 +269,17 @@ export default function AboutPage() {
                         )}
                       </Button>
                       <div>
-                        <p className="font-medium text-foreground">{track.title}</p>
-                        <p className="text-sm text-muted-foreground">{track.artist}</p>
+                        <p className="font-medium text-foreground">
+                          {track.title}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {track.artist}
+                        </p>
                       </div>
                     </div>
-                    <span className="text-sm text-muted-foreground">{track.duration}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {track.duration}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -297,7 +291,9 @@ export default function AboutPage() {
         <section className="text-center">
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
-              <CardTitle className="text-2xl">{language === "vi" ? "Kết Nối Với Tôi" : "Let's Connect"}</CardTitle>
+              <CardTitle className="text-2xl">
+                {language === "vi" ? "Kết Nối Với Tôi" : "Let's Connect"}
+              </CardTitle>
               <CardDescription>
                 {language === "vi"
                   ? "Luôn sẵn sàng thảo luận về code, nhạc, hoặc bất cứ điều gì thú vị!"
@@ -306,17 +302,37 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button variant="outline">
+                <Button
+                  variant="outline"
+                  className="hover:bg-primary hover:text-white cursor-pointer"
+                  onClick={() => {
+                    navTo("https://github.com/pduongpdu99");
+                  }}
+                >
                   <Code className="w-4 h-4 mr-2" />
                   GitHub
                 </Button>
-                <Button variant="outline">
-                  <Music className="w-4 h-4 mr-2" />
-                  SoundCloud
-                </Button>
-                <Button variant="outline">
+                <Button
+                  variant="outline"
+                  className="hover:bg-primary hover:text-white cursor-pointer"
+                  onClick={() => {
+                    navTo(
+                      "https://www.linkedin.com/in/d%C6%B0%C6%A1ng-ph%E1%BA%A1m-71811323a/"
+                    );
+                  }}
+                >
                   <Heart className="w-4 h-4 mr-2" />
                   LinkedIn
+                </Button>
+                <Button
+                  variant="outline"
+                  className="hover:bg-primary hover:text-white cursor-pointer"
+                  onClick={() => {
+                    navTo("https://www.facebook.com/ewbok.cat/");
+                  }}
+                >
+                  <Heart className="w-4 h-4 mr-2" />
+                  Facebook
                 </Button>
               </div>
             </CardContent>
@@ -328,12 +344,12 @@ export default function AboutPage() {
       <audio
         ref={audioRef}
         onEnded={() => {
-          setIsPlaying(false)
-          setCurrentTrack(null)
+          setIsPlaying(false);
+          setCurrentTrack(null);
         }}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
       />
     </div>
-  )
+  );
 }

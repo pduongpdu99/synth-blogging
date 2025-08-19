@@ -87,5 +87,19 @@
     "author": "Synth",
     "published": true,
     "id": 5
+  },
+  {
+    "title": "am nhac",
+    "excerpt": "am nhac",
+    "content": "am nhac",
+    "category": "Guitar Theory",
+    "tags": [],
+    "language": "vi",
+    "readTime": "1 phút đọc",
+    "date": "2025-08-19",
+    "slug": "am-nhac",
+    "featuredImage": "/uploads/1755626021409_functional-programming-music.png",
+    "author": "Synth",
+    "published": true
   }
 ]

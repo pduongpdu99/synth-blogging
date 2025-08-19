@@ -10,15 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Music, Code, Calendar, ArrowRight, Filter } from "lucide-react";
+import { Music, Code, Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BlogPost, getPostsByLanguage } from "@/lib/posts";
 import { type Language, detectLanguage, getTranslation } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/language-switcher";
 
-export default function HomePage() {
+export default function RootLayout({}) {
   const [language, setLanguage] = useState<Language>("en");
-  const [showAllLanguages, setShowAllLanguages] = useState(true);
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
@@ -29,6 +27,7 @@ export default function HomePage() {
   }, []);
 
   const allPosts: BlogPost[] = posts;
+  const [showAllLanguages, setShowAllLanguages] = useState(true);
   const filteredPosts = showAllLanguages
     ? allPosts.slice(0, 6)
     : posts.slice(0, 6);
@@ -52,55 +51,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="rounded-lg flex items-center justify-center">
-                  <img src="/favicon.svg" alt="Synth Logo" className="w-8 h-8 rounded-lg" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">Synth</h1>
-                  <p className="text-sm text-muted-foreground">
-                    {t("tagline")}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link
-                href="#"
-                className="text-foreground hover:text-primary transition-colors"
-              >
-                {t("blog")}
-              </Link>
-              <Link
-                href="/about"
-                className="text-foreground hover:text-primary transition-colors"
-              >
-                {t("about")}
-              </Link>
-              <Link
-                href="#"
-                className="text-foreground hover:text-primary transition-colors"
-              >
-                {t("projects")}
-              </Link>
-              <Link href="/admin">
-                <Button variant="outline" size="sm">
-                  <Code className="w-4 h-4 mr-2" />
-                  {t("admin")}
-                </Button>
-              </Link>
-              <LanguageSwitcher currentLanguage={language} />
-            </nav>
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* Hero Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto text-center max-w-4xl">
@@ -130,17 +81,19 @@ export default function HomePage() {
             {t("heroSubtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8">
+            {/* <Button size="lg" className="text-lg px-8">
               {t("readLatestPosts")}
               <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="text-lg px-8 bg-transparent"
-            >
-              {t("aboutSynth")}
-            </Button>
+            </Button> */}
+            <Link href={"/about"}>
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 bg-transparent"
+              >
+                {t("aboutSynth")}
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -224,106 +177,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-card border-t border-border py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="rounded-lg flex items-center justify-center">
-                  <img src="/favicon.svg" alt="Synth Logo" className="w-8 h-8 rounded-lg" />
-                </div>
-                <span className="text-xl font-bold text-foreground">Synth</span>
-              </div>
-              <p className="text-muted-foreground mb-4">
-                {t("footerDescription")}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                © 2025 Synth Blog. Made with ❤️ and code.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">
-                {t("categories")}
-              </h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {t("computerScience")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {t("musicTech")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {t("aiMusic")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {t("guitarTheory")}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">
-                {t("connect")}
-              </h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    GitHub
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    LinkedIn
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    Twitter
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    Email
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }

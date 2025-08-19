@@ -99,41 +99,23 @@ export default function BlogPostPage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Music className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Synth</h1>
-                <p className="text-xs text-muted-foreground">{t("tagline")}</p>
-              </div>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm">
-                <Share2 className="w-4 h-4 mr-2" />
-                {t("share")}
-              </Button>
-              <Button variant="ghost" size="sm">
-                <Heart className="w-4 h-4" />
-              </Button>
-              <LanguageSwitcher currentLanguage={language} />
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Back Navigation */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link href="/">
           <Button variant="ghost" className="mb-8">
             <ArrowLeft className="w-4 h-4 mr-2" />
             {t("backToBlog")}
           </Button>
         </Link>
+        <div className="flex items-center space-x-4">
+          <Button variant="ghost" size="sm">
+            <Share2 className="w-4 h-4 mr-2" />
+            {t("share")}
+          </Button>
+          <Button variant="ghost" size="sm">
+            <Heart className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Article */}

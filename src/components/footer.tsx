@@ -1,68 +1,101 @@
-"use client"
+// components/Footer.tsx
+"use client";
 
-import { BookOpen, Mail, Facebook, Twitter, Youtube } from "lucide-react"
-import { useLanguage } from "./language-provider"
+import { detectLanguage, getTranslation, Language } from "@/lib/i18n";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
-export function Footer() {
-  const { t } = useLanguage()
+export default function Footer() {
+  const [language, setLanguage] = useState<Language>("en");
+  useEffect(() => {
+    setLanguage(detectLanguage());
+  }, []);
 
+  const t = (key: keyof import("@/lib/i18n").Translations) =>
+    getTranslation(language, key);
   return (
-    <footer className="bg-slate-800 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-card border-t border-border py-12 px-4">
+      <div className="container mx-auto max-w-6xl">
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Logo and Description */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-white p-2 rounded-lg">
-                <BookOpen className="h-6 w-6 text-slate-800" />
+          {/* Logo + description */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="rounded-lg flex items-center justify-center">
+                <img
+                  src="/favicon.svg"
+                  alt="Synth Logo"
+                  className="w-8 h-8 rounded-lg"
+                />
               </div>
-              <div className="font-serif font-semibold text-lg">
-                English Classroom
-                <br />
-                <span className="text-base">Simulator</span>
-              </div>
+              <span className="text-xl font-bold text-foreground">Synth</span>
             </div>
-            <p className="text-slate-300 leading-relaxed">{t("hero.description")}</p>
+            <p className="text-muted-foreground mb-4">
+              {t("footerDescription")}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              © 2025 Synth Blog. Made with ❤️ and code.
+            </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Quick Links</h3>
-            <div className="space-y-2">
-              <a href="#" className="block text-slate-300 hover:text-white transition-colors">
-                {t("nav.simulation")}
-              </a>
-              <a href="#" className="block text-slate-300 hover:text-white transition-colors">
-                {t("nav.resources")}
-              </a>
-              <a href="#" className="block text-slate-300 hover:text-white transition-colors">
-                {t("nav.tutorial")}
-              </a>
-              <a href="#" className="block text-slate-300 hover:text-white transition-colors">
-                {t("nav.community")}
-              </a>
-            </div>
+          {/* Categories */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("categories")}
+            </h4>
+            <ul className="space-y-2 text-muted-foreground">
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  {t("computerScience")}
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  {t("musicTech")}
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  {t("aiMusic")}
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  {t("guitarTheory")}
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Connect With Us</h3>
-            <div className="flex items-center gap-2 text-slate-300">
-              <Mail className="h-4 w-4" />
-              <span>{t("footer.contact")}</span>
-            </div>
-            <div className="flex gap-4">
-              <Facebook className="h-5 w-5 text-slate-300 hover:text-white cursor-pointer transition-colors" />
-              <Twitter className="h-5 w-5 text-slate-300 hover:text-white cursor-pointer transition-colors" />
-              <Youtube className="h-5 w-5 text-slate-300 hover:text-white cursor-pointer transition-colors" />
-            </div>
+          {/* Connect */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("connect")}
+            </h4>
+            <ul className="space-y-2 text-muted-foreground">
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  GitHub
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  LinkedIn
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  Twitter
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary transition-colors">
+                  Email
+                </Link>
+              </li>
+            </ul>
           </div>
-        </div>
-
-        <div className="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400">
-          <p>{t("footer.copyright")}</p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -314,17 +314,10 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Music className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Synth {t("admin")}</h1>
-                <p className="text-xs text-muted-foreground">{t("contentManagement")}</p>
-              </div>
             </Link>
             <div className="flex items-center space-x-4">
               <Button
@@ -343,7 +336,6 @@ export default function AdminPage() {
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </Button>
-              <LanguageSwitcher currentLanguage={language} />
             </div>
           </div>
         </div>

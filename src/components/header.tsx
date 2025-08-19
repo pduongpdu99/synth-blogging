@@ -1,99 +1,63 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
-import { Button } from "./ui/button";
-import { LanguageToggle } from "./language-toggle";
-import { useLanguage } from "./language-provider";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Code } from "lucide-react";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { Language, detectLanguage, getTranslation } from "@/lib/i18n";
+import { useState, useEffect } from "react";
 
-export function Header() {
-  const { t } = useLanguage();
-  const router = useRouter();
-  const [isShow, setIsShow] = useState(false);
-
-  const navTo = () => {
-    router.push("/login");
-  };
-
+export default function Header() {
+  const [language, setLanguage] = useState<Language>("en");
+  const t = (key: keyof import("@/lib/i18n").Translations) =>
+    getTranslation(language, key);
   useEffect(() => {
-    fetch("/api/check-login", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    }).then(async (res) => {
-      setIsShow(!(await res.json()).success);
-    });
-  }, [isShow]);
+    setLanguage(detectLanguage());
+  }, []);
 
   return (
-    <header className="bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="bg-slate-800 p-2 rounded-lg">
-              <BookOpen className="h-6 w-6 text-white" />
-            </div>
-            <div className="font-serif font-semibold text-slate-800 text-lg">
-              English Classroom
-              <br />
-              <span className="text-base">Simulator</span>
+    <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo + tagline */}
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <div className="rounded-lg flex items-center justify-center">
+                <img
+                  src="/favicon.svg"
+                  alt="Synth Logo"
+                  className="w-8 h-8 rounded-lg"
+                />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-foreground">Synth</h1>
+                <p className="text-sm text-muted-foreground">{t("tagline")}</p>
+              </div>
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#"
-              className="text-slate-600 hover:text-slate-900 font-medium transition-colors"
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link
+              href="/"
+              className="text-foreground hover:text-primary transition-colors"
             >
-              {t("nav.home")}
-            </a>
-            <a
-              href="#"
-              className="text-slate-600 hover:text-slate-900 font-medium transition-colors"
+              {t("blog")}
+            </Link>
+            <Link
+              href="/about"
+              className="text-foreground hover:text-primary transition-colors"
             >
-              {t("nav.simulation")}
-            </a>
-            <a
-              href="#"
-              className="text-slate-600 hover:text-slate-900 font-medium transition-colors"
-            >
-              {t("nav.resources")}
-            </a>
-            <a
-              href="#"
-              className="text-slate-600 hover:text-slate-900 font-medium transition-colors"
-            >
-              {t("nav.tutorial")}
-            </a>
-            <a
-              href="#"
-              className="text-slate-600 hover:text-slate-900 font-medium transition-colors"
-            >
-              {t("nav.community")}
-            </a>
-            <a
-              href="#"
-              className="text-slate-600 hover:text-slate-900 font-medium transition-colors"
-            >
-              {t("nav.contact")}
-            </a>
-          </nav>
-
-          {/* Right side */}
-          <div className="flex items-center gap-4">
-            <LanguageToggle />
-            {isShow && (
-              <Button
-                onClick={navTo}
-                variant="outline"
-                className="hidden sm:inline-flex bg-transparent"
-              >
-                {t("nav.login")}
+              {t("about")}
+            </Link>
+            <Link href="/admin">
+              <Button variant="outline" size="sm">
+                <Code className="w-4 h-4 mr-2" />
+                {t("admin")}
               </Button>
-            )}
-          </div>
+            </Link>
+            <LanguageSwitcher currentLanguage={language} />
+          </nav>
         </div>
       </div>
     </header>

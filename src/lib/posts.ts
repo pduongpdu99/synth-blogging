@@ -1,5 +1,5 @@
 "use server";
-
+import fs from "fs";
 export interface BlogPost {
   id: number;
   slug: string;
@@ -67,16 +67,26 @@ export async function searchPosts(query: string): Promise<BlogPost[]> {
       post.tags.some((tag) => tag.toLowerCase().includes(lowercaseQuery))
   );
 }
+
 export async function savePost(post: BlogPost): Promise<boolean> {
   try {
-    const res = await fetch(`${BASE_URL}/api/savePost`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
-    return res.ok;
+    const filePath = fs.existsSync("data/posts.json")
+      ? "data/posts.json"
+      : "public/data/posts.json";
+    // Fetch posts from BASE_URL/data/posts.json
+    const postsData = fs.readFileSync(filePath, "utf-8");
+    const posts = JSON.parse(postsData) as BlogPost[];
+    const index = posts.findIndex((p) => p.id === post.id);
+
+    if (index !== -1) {
+      posts[index] = post; // Update existing post
+    } else {
+      posts.push(post); // Add new post
+    }
+
+    // Save updated posts to local file
+    fs.writeFileSync(filePath, JSON.stringify(posts, null, 2), "utf-8");
+    return true;
   } catch (error) {
     console.error("Error saving post:", error);
     return false;
