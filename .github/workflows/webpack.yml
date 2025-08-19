@@ -22,8 +22,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
-      run: |
-        npm install -g pnpm
-        npm install
-        npx webpack
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build Next.js app
+      run: npm run build
+
+    - name: Run tests
+      run: npm test
