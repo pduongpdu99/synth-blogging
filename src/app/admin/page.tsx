@@ -67,7 +67,7 @@ export default function AdminPage() {
       setIsAuthenticated(true)
       localStorage.setItem("admin_authenticated", "true")
     } else {
-      alert("Invalid credentials. Use admin/synth2024")
+      alert("Invalid credentials")
     }
   }
 
@@ -120,7 +120,7 @@ export default function AdminPage() {
                 <Lock className="w-4 h-4 mr-2" />
                 Login to Admin Panel
               </Button>
-              <p className="text-xs text-muted-foreground text-center">Demo credentials: admin / synth2024</p>
+              <p className="text-xs text-muted-foreground text-center">Demo credentials: admin / synth2025</p>
             </form>
           </CardContent>
         </Card>

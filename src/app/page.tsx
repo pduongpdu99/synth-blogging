@@ -260,7 +260,7 @@ export default function HomePage() {
                 {t("footerDescription")}
               </p>
               <p className="text-sm text-muted-foreground">
-                © 2024 Synth Blog. Made with ❤️ and code.
+                © 2025 Synth Blog. Made with ❤️ and code.
               </p>
             </div>
             <div>

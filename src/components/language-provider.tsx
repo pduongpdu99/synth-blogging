@@ -60,7 +60,7 @@ const translations = {
     "auth.terms": "By creating an account, you agree to our Terms of Service and Privacy Policy",
 
     // Footer
-    "footer.copyright": "© 2024 English Classroom Simulator. All rights reserved.",
+    "footer.copyright": "© 2025 English Classroom Simulator. All rights reserved.",
     "footer.contact": "Contact us: info@englishsimulator.com",
   },
   vi: {
@@ -112,7 +112,7 @@ const translations = {
     "auth.terms": "Bằng cách tạo tài khoản, bạn đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của chúng tôi",
 
     // Footer
-    "footer.copyright": "© 2024 Mô phỏng lớp học tiếng Anh. Tất cả quyền được bảo lưu.",
+    "footer.copyright": "© 2025 Mô phỏng lớp học tiếng Anh. Tất cả quyền được bảo lưu.",
     "footer.contact": "Liên hệ: info@englishsimulator.com",
   },
 }
