@@ -16,7 +16,7 @@ export interface BlogPost {
   featuredImage?: string;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
+const BASE_URL = process.env.BASE_URL || "";
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
