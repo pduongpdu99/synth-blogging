@@ -3,5 +3,9 @@
   publish = ".next"
   functions = ".netlify/functions"
 
+[build.environment]
+  NEXT_PUBLIC_BASE_URL="https://beamish-tarsier-74a529.netlify.app"
+  BASE_URL="https://beamish-tarsier-74a529.netlify.app"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
