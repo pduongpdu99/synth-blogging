@@ -25,7 +25,6 @@ jobs:
     - name: Install dependencies
       run: 
         npm install
-        npm install pnpm 
         npm install @netlify/plugin-nextjs@^5.12.0
         npm ci
 
