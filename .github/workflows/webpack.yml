@@ -37,5 +37,5 @@ jobs:
         production-branch: master
         github-token: ${{secrets.GITHUB_TOKEN}}
         deploy-message: "Deploy from github actions"
-        enable-pull-request-conmment: true
+        enable-pull-request-comment: true
 
