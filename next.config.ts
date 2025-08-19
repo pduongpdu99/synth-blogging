@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
   webpack: (config) => {
+    config.resolve.alias['@'] = './src';
     config.module.rules.push({
       test: /\.json$/,
       type: "javascript/auto",
